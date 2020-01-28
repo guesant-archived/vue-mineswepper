@@ -35,11 +35,7 @@
             ></div>
 
             <div class="bombs-around">
-              {{
-              getBombsArround(getTablePosition(i)) > 0
-              ? getBombsArround(getTablePosition(i))
-              : ''
-              }}
+              {{ getDisplayValue(i) }}
             </div>
           </li>
         </ul>
@@ -103,6 +99,14 @@ export default {
       return this.getSquaresArround(pos, true)
         .filter(i => !this.hasBomb(i))
         .filter(i => this.getBombsArround(this.getTablePosition(i)) === 0);
+    },
+    getDisplayValue(i) {
+      const pos = this.getTablePosition(i);
+      if (this.getBombsArround(pos) > 0 && this.game.discovered.includes(i)) {
+        return this.getBombsArround(pos);
+      }
+
+      return '';
     },
     hasBomb(i) {
       if (i >= 0 && i < this.game.options.size.rows * this.game.options.size.columns) {
@@ -254,6 +258,11 @@ $border-shadow: $border-width solid rgba(#030220, 0.4);
         }
 
         .bombs-around {
+          max-width: 75%;
+          max-height: 75%;
+          width: 1rem;
+          height: 1rem;
+          text-align: center;
           user-select: none;
           font-size: 1rem;
           font-weight: 600;
