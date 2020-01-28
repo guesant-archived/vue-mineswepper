@@ -3,9 +3,9 @@
     <div class="border-1 game">
       <div class="border-2 game-header">
         <div>
-          <span class="game-header-counter">
-            {{ game.options.bombsCount.toString().padStart(3, '0') }}
-          </span>
+          <span
+            class="game-header-counter"
+          >{{ game.options.bombsCount.toString().padStart(3, '0') }}</span>
         </div>
         <div>
           <div class="game-header-emoji emoji-brbo"></div>
@@ -15,28 +15,25 @@
         </div>
       </div>
       <div class="border-2 game-campo">
-        <ul class="game-campo-minas">
+        <ul class="game-campo-minas" :style="{ width: '350px', maxHeight: '350px' }">
           <li
             v-for="(_, i) in (game.options.size.rows * game.options.size.columns)"
             :key="i"
             class="game-campo-minas-mina"
             @click="() => { bombClick(i) }"
           >
-            <!-- só por enquanto -->
             <div
               class="mina-overlay"
-              :class="{ closed: !game.discovered.includes(i), bomb: game.bombs.includes(i) }">
-            </div>
+              :class="{ closed: !game.discovered.includes(i), bomb: game.bombs.includes(i) }"
+            ></div>
 
             <div class="bombs-around">
               {{
-                getBombsArround(getTablePosition(i)) > 0
-                  ? getBombsArround(getTablePosition(i))
-                  : ''
+              getBombsArround(getTablePosition(i)) > 0
+              ? getBombsArround(getTablePosition(i))
+              : ''
               }}
-              <!-- {{Math.round(Math.random() * 6)}} -->
             </div>
-            <!-- {{i}} -->
           </li>
         </ul>
       </div>
@@ -87,7 +84,7 @@ export default {
         [pos.row + 1, pos.column],
         [pos.row + 1, pos.column + 1, directContact && lastColumn],
       ]
-        .filter(([,, condition = true]) => condition)
+        .filter(([, , condition = true]) => condition)
         .map(([row, column]) => this.getIndexPosition({ row, column }));
     },
     getBombsArround(pos) {
@@ -185,7 +182,7 @@ $border-shadow: $border-width solid rgba(#030220, 0.4);
 
       @each $emoji in $emojis {
         &.emoji-#{$emoji} {
-          background: url('~@/assets/icons/emoji-#{$emoji}.png');
+          background: url("~@/assets/icons/emoji-#{$emoji}.png");
           background-size: 100%;
         }
       }
@@ -198,15 +195,18 @@ $border-shadow: $border-width solid rgba(#030220, 0.4);
 
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     &-minas {
+      border: 2px solid rgba(#030220, 0.2);
       flex: 1;
 
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      height: 100%;
 
       &-mina {
+        $bg-mine: rgba(8, 18, 19, 0.31);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -214,6 +214,7 @@ $border-shadow: $border-width solid rgba(#030220, 0.4);
         width: 100%;
 
         background-color: white;
+
         .mina-overlay {
           position: absolute;
           top: 0;
@@ -222,13 +223,11 @@ $border-shadow: $border-width solid rgba(#030220, 0.4);
           width: 100%;
           height: 100%;
 
-          // background-color: red;
-          background: rgba(8, 18, 19, 0.31);
-          // border: $border-width solid rgba(11, 7, 52, 0.1);
+          background: $bg-mine;
 
           &.bomb {
-            background: url("~@/assets/icons/emoji-bomb.png")
-              rgba(8, 18, 19, 0.31) center center no-repeat;
+            background: url("~@/assets/icons/emoji-bomb.png") $bg-mine center
+              center no-repeat;
 
             background-size: 75%;
           }
@@ -245,12 +244,11 @@ $border-shadow: $border-width solid rgba(#030220, 0.4);
                 rgba(8, 18, 19, 0.31)
               ),
               #ffffff;
-            border-radius: 2px;
-            overflow: hidden;
           }
         }
 
         .bombs-around {
+          user-select: none;
           font-size: 1rem;
           font-weight: 600;
         }
