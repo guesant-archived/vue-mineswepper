@@ -11,7 +11,7 @@
           <div class="game-header-emoji emoji-brbo"></div>
         </div>
         <div>
-          <span class="game-header-counter">000</span>
+          <span class="game-header-counter">{{game.timer.count.toString().padStart(3, '0')}}</span>
         </div>
       </div>
       <div class="border-2 game-campo">
@@ -49,6 +49,11 @@ export default {
   data() {
     return {
       game: {
+        timer: {
+          running: false,
+          count: 0,
+          tick: null,
+        },
         options: {
           bombsCount: 5,
           size: {
@@ -121,6 +126,34 @@ export default {
       if (!this.game.discovered.includes(i)) {
         this.game.discovered.push(i);
       }
+    },
+
+    timerAction(action) {
+      const getTickInterval = () => setInterval(() => { this.game.timer.count += 1; }, 1000);
+
+      const actions = {
+        start: () => {
+          this.game.timer.tick = getTickInterval();
+          this.game.timer.running = true;
+        },
+        clearInterval: () => {
+          clearInterval(this.game.timer.tick);
+          this.game.timer.running = false;
+        },
+        clearCount: () => { this.game.timer.count = 0; },
+
+        pause: () => {
+          if (this.game.timer.running) {
+            actions.clearInterval();
+          } else {
+            actions.start();
+          }
+        },
+
+        reset: () => { actions.clearInterval(); actions.clearCount(); },
+      };
+
+      actions[action]();
     },
   },
 };
