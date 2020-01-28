@@ -15,7 +15,14 @@
         </div>
       </div>
       <div class="border-2 game-campo">
-        <ul class="game-campo-minas" :style="{ width: '350px', maxHeight: '350px' }">
+        <ul
+          class="game-campo-minas"
+          :style="{
+            gridTemplateColumns: `repeat(${game.options.size.columns}, 1fr)`,
+            width: '350px',
+            maxHeight: '350px'
+          }"
+        >
           <li
             v-for="(_, i) in (game.options.size.rows * game.options.size.columns)"
             :key="i"
@@ -203,7 +210,6 @@ $border-shadow: $border-width solid rgba(#030220, 0.4);
       flex: 1;
 
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
 
       &-mina {
         $bg-mine: rgba(8, 18, 19, 0.31);
