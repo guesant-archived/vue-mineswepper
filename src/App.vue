@@ -130,7 +130,11 @@ export default {
 
       this.discover(i);
       if (this.game.bombs.includes(i)) {
+        this.timerAction('clearInterval');
+        this.game.bombs.forEach(this.discover);
         this.game.status = 'xx';
+      } else if (this.game.timer.running === false) {
+        this.timerAction('start');
       }
     },
 
