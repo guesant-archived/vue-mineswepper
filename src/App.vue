@@ -29,14 +29,15 @@
             class="game-campo-minas-mina"
             @click="() => { bombClick(i) }"
           >
-            <div class="mina-overlay" :class="{
+            <div
+              class="mina-overlay"
+              :class="{
               closed: !game.discovered.includes(i),
               bomb: game.bombs.includes(i)
-            }"></div>
+            }"
+            ></div>
 
-            <div class="bombs-around">
-              {{ getDisplayValue(i) }}
-            </div>
+            <div class="bombs-around">{{ getDisplayValue(i) }}</div>
           </li>
         </ul>
       </div>
