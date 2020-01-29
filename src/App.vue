@@ -19,8 +19,8 @@
           class="game-campo-minas"
           :style="{
             gridTemplateColumns: `repeat(${game.options.size.columns}, 1fr)`,
-            width: '350px',
-            maxHeight: '350px'
+            width: '260px',
+            maxHeight: '260px'
           }"
         >
           <li
@@ -29,10 +29,10 @@
             class="game-campo-minas-mina"
             @click="() => { bombClick(i) }"
           >
-            <div
-              class="mina-overlay"
-              :class="{ closed: !game.discovered.includes(i), bomb: game.bombs.includes(i) }"
-            ></div>
+            <div class="mina-overlay" :class="{
+              closed: !game.discovered.includes(i),
+              bomb: game.bombs.includes(i)
+            }"></div>
 
             <div class="bombs-around">
               {{ getDisplayValue(i) }}
@@ -272,7 +272,7 @@ $border-shadow: $border-width solid rgba(#030220, 0.4);
             background: url("~@/assets/icons/emoji-bomb.png") $bg-mine center
               center no-repeat;
 
-            background-size: 75%;
+            background-size: 70%;
           }
           &.closed {
             border-top: $border-light;
@@ -298,7 +298,6 @@ $border-shadow: $border-width solid rgba(#030220, 0.4);
           text-align: center;
           user-select: none;
           font-size: 1rem;
-          font-weight: 600;
         }
       }
     }
