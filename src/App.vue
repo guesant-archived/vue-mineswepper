@@ -71,6 +71,7 @@ export default {
     restartGame() {
       this.game.status = 'smile';
       this.game.discovered = [];
+      this.timerAction('reset');
     },
     getTablePosition(i) {
       return {
@@ -131,6 +132,9 @@ export default {
       if (this.game.bombs.includes(i)) {
         this.game.bombs.forEach(this.discover);
         this.game.status = 'xx';
+        this.timerAction('clearInterval');
+      } else if (!this.game.timer.running) {
+        this.timerAction('start');
       }
     },
     discover(i) {
