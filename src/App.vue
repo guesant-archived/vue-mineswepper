@@ -8,7 +8,7 @@
           >{{ game.options.bombsCount.toString().padStart(3, '0') }}</span>
         </div>
         <div>
-          <div class="game-header-emoji emoji-brbo"></div>
+          <div @click="restartGame" class="game-header-emoji" :class="`emoji-${game.status}`"></div>
         </div>
         <div>
           <span class="game-header-counter">{{game.timer.count.toString().padStart(3, '0')}}</span>
@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       game: {
+        status: 'smile',
         timer: {
           running: false,
           count: 0,
@@ -67,6 +68,10 @@ export default {
     };
   },
   methods: {
+    restartGame() {
+      this.game.status = 'smile';
+      this.game.discovered = [];
+    },
     getTablePosition(i) {
       return {
         row: Math.floor(i / this.game.options.size.rows),
@@ -120,7 +125,13 @@ export default {
       return false;
     },
     bombClick(i) {
+      if (this.game.status === 'xx') return;
       this.discover(i);
+
+      if (this.game.bombs.includes(i)) {
+        this.game.bombs.forEach(this.discover);
+        this.game.status = 'xx';
+      }
     },
     discover(i) {
       if (!this.game.discovered.includes(i)) {
