@@ -107,11 +107,6 @@ export default {
         .filter(this.hasBomb)
         .length;
     },
-    getSafeSqrsArround(pos) {
-      return this.getSquaresArround(pos, true)
-        .filter(i => !this.hasBomb(i))
-        .filter(i => this.getBombsArround(this.getTablePosition(i)) === 0);
-    },
     getDisplayValue(i) {
       const pos = this.getTablePosition(i);
       if (this.getBombsArround(pos) > 0 && this.game.discovered.includes(i)) {
