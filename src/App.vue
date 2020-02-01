@@ -68,6 +68,11 @@ export default {
       },
     };
   },
+  computed: {
+    gameSize() {
+      return this.game.options.size.rows * this.game.options.size.columns;
+    },
+  },
   methods: {
     restartGame() {
       this.game.status = 'smile';
@@ -100,7 +105,8 @@ export default {
         [pos.row + 1, pos.column + 1, directContact && lastColumn],
       ]
         .filter(([, , condition = true]) => condition)
-        .map(([row, column]) => this.getIndexPosition({ row, column }));
+        .map(([row, column]) => this.getIndexPosition({ row, column }))
+        .filter(this.validIndex);
     },
     getBombsArround(pos) {
       return this.getSquaresArround(pos)
@@ -115,8 +121,14 @@ export default {
 
       return '';
     },
+    validIndex(i) {
+      if (i >= 0 && i < this.gameSize) {
+        return true;
+      }
+      return false;
+    },
     hasBomb(i) {
-      if (i >= 0 && i < this.game.options.size.rows * this.game.options.size.columns) {
+      if (this.validIndex(i)) {
         return this.game.bombs.includes(i);
       }
       return false;
