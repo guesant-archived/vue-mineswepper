@@ -221,15 +221,21 @@ $border-shadow: $border-width solid rgba(#030220, 0.4);
 
     padding: 6px;
 
+    $counter-size: 24px;
     &-counter {
-      display: block;
+      display: inline-block;
 
       background-color: #3b0908;
       border-radius: 4px;
 
-      padding: 6px;
+      $padding-top: $counter-size / 4;
+      $padding-right: $counter-size / 8;
+      $padding-bottom: $counter-size / 8;
+      $padding-left: $counter-size * 5 / 24;
 
-      font-size: 18px;
+      padding: $padding-top $padding-right $padding-bottom $padding-left;
+
+      font-size: $counter-size;
       letter-spacing: 0.125em;
       color: #fa2622;
     }
